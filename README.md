@@ -1,2 +1,2 @@
 # reverse_proxy_firewall_simulation
-# reverse_proxy_firewall_simulation
+I am currently in the proccess of learning Go and this project came to me because I wanted to work on a firewall. I was also considering making a toy os, but I figured that might be too hard for me right now with my current knowledge of go. This project idea is sort of an amalgamation of both those plans. I want to make a reverse proxy that looks at incoming traffic, checks which goroutine can handle my incoming traffic and accordingly transfers the traffic.  There'll be a firewall as well that will look at the incoming traffic though right now, I am not particularly sure, how I will make it do something useful in this. 
