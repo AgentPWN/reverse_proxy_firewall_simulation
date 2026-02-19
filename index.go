@@ -1,33 +1,36 @@
 package main
 import (
 	"fmt"
-	// "time"
-	"sync"
+	"time"
+	"math/rand"
+	// "sync"
 )
-
-func display(s string) {
-    for i := 0; i < 3; i++ {
-        fmt.Println(s)
-    }
+type routine struct{
+	health bool
+	id int
 }
-func worker(id int){
-	fmt.Printf("%d",id)
+
+func worker(id int, channel chan int){
+	for job := range channel{
+		fmt.Printf("%d,%d\n",id,job)
+	}
 }
 func main() {
-	var wg sync.WaitGroup
-	for i:=1; i<5; i++{
-		wg.Add(1)
-		go func(){
-			defer wg.Done()
-			worker(1)
-		}()
-		wg.Add(1)
-		go func(){
-			defer wg.Done()
-			worker(2)
-		}()
-		
-	}
-	wg.Wait()
+	now := time.Now()
+	var channel = make(chan int)
+	thread := routine{true, 0}
+	go worker(0, channel)
+	for i := 0; time.Since(now) < 10*time.Second; i++{
 
+		if rand.Intn(2)<1{
+			go worker(i,channel)
+		}
+		if rand.Intn(3)<2{
+			go worker(i,channel)
+		}
+		channel<-i
+
+		time.Sleep(1*time.Second)
+	}
+	close(channel)
 }
