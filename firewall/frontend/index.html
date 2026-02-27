@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Text Box</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="textbox">Enter text:</label>
+        <input type="text" id="textbox" name="textbox">
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent redirect
+
+            const value = document.getElementById("textbox").value;
+
+            fetch("/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ textbox: value })
+            });
+        });
+    </script>
+</body>
+</html>
